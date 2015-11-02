@@ -24,4 +24,5 @@ ControlPath ${CTRL_FILE}
 EOF
     ) &&
     chmod 0600 ~/.ssh/config &&
+    cat ${KEY_FILE} &&
     true
