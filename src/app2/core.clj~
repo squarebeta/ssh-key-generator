@@ -1,0 +1,19 @@
+(ns app2.core
+  (:gen-class))
+  (use '[clojure.java.shell :only [sh]])
+  (require '[clojure.java.io :as io])
+
+(defn -main
+  "I don't do a whole lot ... yet."
+  [& args]
+  (sh "mkdir" "--parents" (str (io/file (System/getenv "HOME") ".ssh" "keys2")))
+  (sh "chmod" "0700" (str (io/file (System/getenv "HOME") ".ssh" "keys2")))
+  (def keyfile (get (sh "mktemp" (str (io/file (System/getenv "HOME") ".ssh" "keys2" "XXXXXXXX_id_rsa"))) :out))
+  (sh "rm" keyfile)
+  (sh "ssh-keygen" "-f" keyfile -C "clojure generated key" -p "")
+  (sh "mkdir "--parents" (str (io/file (System/getenv "HOME") ".ssh" "control")))
+  (sh "chmod" "0700" (str (io/file (System/getenv "HOME") ".ssh" "control")))
+  (def ctrlfile (get (sh "mktemp" (str (io/file (System/getenv "HOME") ".ssh" "control" "XXXXXXXX_ctrl_path"))) :out))
+  
+  (shutdown-agents)
+  )
